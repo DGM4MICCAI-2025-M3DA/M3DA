@@ -1,20 +1,33 @@
 import nibabel as nib
 import numpy as np
-from amid.amos import AMOS
+# from amid.amos import AMOS
 from connectome import Chain, Transform, Filter, CacheToRam
 from deli import load_json
 
-# from ..amid.amos import AMOS
+from ..amid.amos import AMOS
 from ..config import PATH_AMOS22_RAW, PATH_AMOS22_LDCT, REPO_PATH
 from ..const import LDCT_NOISE_INTENSITY, RANDOM_STATE
 from ..utils import flatten
 
 
-amos_base = Chain(
-    AMOS(PATH_AMOS22_RAW),
-    Filter(lambda id: int(id) <= 600),  # first AMOS data iteration!
-    CacheToRam(('ids',))
-)
+class FlipMRI(Transform):
+    __inherit__ = True
+    _mri_ids: tuple = tuple(flatten(load_json(REPO_PATH / "splits/Task02_CT_MR.json")[1:]))
+
+    def image(id, image, _mri_ids):
+        return np.flip(image, axis=0) if (id in _mri_ids) else image
+
+    def mask(id, mask, _mri_ids):
+        if mask is None:
+            return None
+        return np.flip(mask, axis=0) if (id in _mri_ids) else mask
+
+    def affine(id, affine, _mri_ids):
+        if id not in _mri_ids:
+            return affine
+        a = np.copy(affine)
+        a[0][0] = -a[0][0]
+        return a
 
 
 class CTNoise(Transform):
@@ -46,3 +59,11 @@ class CTNoise(Transform):
             img = img.astype(np.int16)
             nib.save(nib.Nifti1Image(img, affine=affine), image_path)
             return img
+
+
+amos_base = Chain(
+    AMOS(PATH_AMOS22_RAW),
+    Filter(lambda id: int(id) <= 600),  # first AMOS data iteration!
+    FlipMRI(),
+    CacheToRam(('ids', ))
+)

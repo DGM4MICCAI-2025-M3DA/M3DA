@@ -15,5 +15,5 @@ class BuildMask(Transform):
 lidc_base = Chain(
     LIDC(PATH_LIDC_RAW),
     BuildMask(),
-    CacheToRam(('ids',))
+    CacheToRam(('ids', ))
 )

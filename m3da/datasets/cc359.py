@@ -15,5 +15,5 @@ cc359_base = Chain(
     CC359(PATH_CC359_RAW),
     BuildMask(),
     Filter(lambda mask: mask is not None),
-    CacheToRam(('ids',))
+    CacheToRam(('ids', ))
 )

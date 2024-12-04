@@ -18,5 +18,5 @@ brats_base = Chain(
     BraTS2021(PATH_BRATS2021_RAW),
     Filter(lambda fold: fold == 'TrainingData'),
     BuildMask(),
-    CacheToRam(('ids',))
+    CacheToRam(('ids', ))
 )
