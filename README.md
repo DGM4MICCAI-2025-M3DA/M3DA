@@ -2,7 +2,7 @@
 
 This repository contains the code and supplementary materials for the paper
 
-**M3DA: Benchmark for Domain Adaptation in 3D Medical Image Segmentation**
+**M3DA: Benchmark for Unsupervised Domain Adaptation in 3D Medical Image Segmentation**
 
 Domain shift remains a critical obstacle in applying Deep Learning to segment 3D medical images like MRI and CT.
 To address this, we introduce the M3DA benchmark, featuring four public datasets with diverse and realistic domain shifts.
@@ -16,7 +16,7 @@ Examples from individual domains in M3DA for visual comparison between domains:
 ## Install
 
 ```
-git clone https://github.com/CVPR2025Paper3712/M3DA.git
+git clone https://github.com/MICCAI2025Paper4631/M3DA.git
 cd M3DA && pip install -e .
 ```
 
@@ -43,8 +43,6 @@ PATH_AMOS22_RAW = "/path/to/the/downloaded/files/amos22/"
 ```
 
 ### 3. Importing and using datasets
-
-<!-- обновить, чтобы соответствовало коду -->
 
 Every DA task has five primary objects:
 
