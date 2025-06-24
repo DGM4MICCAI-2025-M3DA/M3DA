@@ -16,7 +16,7 @@ Examples from individual domains in M3DA for visual comparison between domains:
 ## Install
 
 ```
-git clone https://github.com/MICCAI2025Paper4631/M3DA.git
+git clone https://github.com/DGM4MICCAI-2025-M3DA/M3DA.git
 cd M3DA && pip install -e .
 ```
 
